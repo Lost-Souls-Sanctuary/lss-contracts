@@ -18,7 +18,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
-contract LostSoulsSanctuary is ERC721, Ownable {
+contract CCCRinkeby is ERC721, Ownable {
     
     using SafeMath for uint256;
 
@@ -45,7 +45,7 @@ contract LostSoulsSanctuary is ERC721, Ownable {
     
     event licenseisLocked(string _licenseText);
 
-    constructor() ERC721("Lost Souls Sanctuary", "LSS") { }
+    constructor() ERC721("CCCRinkeby", "CCCR") { }
     
     function withdraw() public onlyOwner {
         uint balance = address(this).balance;
