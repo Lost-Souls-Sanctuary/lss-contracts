@@ -1,8 +1,8 @@
 {
   "name": "ecto-base-contracts",
   "version": "1.0.0",
-  "engines":{
-    "yarn":"1.x"
+  "engines": {
+    "yarn": "1.x"
   },
   "license": "MIT",
   "types": "./types/index.ts",
@@ -29,7 +29,7 @@
     "Ethereum"
   ],
   "scripts": {
-    "start":"hardhat --network fantom run ./scripts/harvest.js",
+    "start": "hardhat --network fantom run ./scripts/harvest.js",
     "build": "hardhat compile",
     "console": "hardhat console",
     "testnet:deploy": "yarn ropsten:deploy && yarn matictestnet:deploy && yarn fantomtestnet:deploy",
@@ -69,7 +69,7 @@
     "@nomiclabs/hardhat-etherscan": "^2.1.0",
     "@nomiclabs/hardhat-solhint": "^2.0.0",
     "@nomiclabs/hardhat-waffle": "^2.0.0",
-    "@openzeppelin/contracts": "^3.1.0",
+    "@openzeppelin/contracts": "^4.2.0",
     "@sushiswap/sdk": "^4.1.1",
     "@tenderly/hardhat-tenderly": "^1.0.12",
     "@typechain/ethers-v5": "^5.0.0",
@@ -99,9 +99,5 @@
     "typechain": "^4.0.2",
     "typescript": "^4.3.2"
   },
-  "dependencies": {
-    "@pancakeswap-libs/sdk": "https://github.com/Layer3Org/spiritswap-sdk.git",
-    "axios": "^0.21.1",
-    "cron": "^1.8.2"
-  }
+  "dependencies": {}
 }

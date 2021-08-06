@@ -5,6 +5,6 @@ const {ethers } = require("hardhat");
 
 	let accounts = await ethers.getSigners();
 	let lssContract = await ethers.getContract("CCCRinkeby",accounts[0])
-	let res = await lssContract.pause(false);
+	let res = await lssContract.saleIsActive();
 	console.log(res)
 })();

@@ -7,153 +7,115 @@
 // The deal: a Sanctuary will be setup to help the Souls discover their mistakes, changes their lives and pass through to the elusive good place,
 // in return the Lost Souls Sanctuary will be given exclusive access to study the ectoplasmic layer the Soul's reside in so we may better understand our mortal role here on Earth.
 
-// Tip of the hat to the BoringBananaCo team
+// <3 LS Sanctuary team
 
-// <3 Lost Souls Sanctuary Team
+pragma solidity ^0.8.0;
 
-pragma solidity ^0.7.0;
-pragma experimental ABIEncoderV2;
+import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
+import '@openzeppelin/contracts/access/Ownable.sol';
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
+contract CCCRinkeby is ERC721Enumerable, Ownable {
 
-contract CCCRinkeby is ERC721, Ownable {
-    
-    using SafeMath for uint256;
+    using Strings for uint256;
 
-    string public SOUL_PROVENANCE = ""; // IPFS URL WILL BE ADDED WHEN SOULS ARE ALL SOLD OUT
-    
-    string public LICENSE_TEXT = ""; // IT IS WHAT IT SAYS
-    
-    bool licenseLocked = false; // TEAM CAN'T EDIT THE LICENSE AFTER THIS GETS TRUE
+    string public SOUL_PROVENANCE = "";
+    string _baseTokenURI;
+    uint256 public constant MAX_SOULS = 99999;
+    uint256 private soulReserved = 100;
+    uint256 public constant maxSoulsPurchase = 20;
+    uint256 private soulPrice = 0.03 ether;
+    bool public salePaused = true;
 
-    uint256 public constant soulPrice = 30000000000000000; // 0.03 ETH
+    // Team - 25%
+    address t1;
+    address t2;
+    address t3;
+    address t4;
+    // Community Wallet - 73%
+    address t5;
 
-    uint public constant maxSoulPurchase = 20;
-
-    uint256 public constant MAX_SOULS = 10000; // 10k
-
-    bool public saleIsActive = false;
-    
-    mapping(uint => string) public soulNames;
-    
-    // Reserve 125 Souls for team - Giveaways/Prizes etc
-    uint public soulReserve = 125;
-    
-    event soulNameChange(address _by, uint _tokenId, string _name);
-    
-    event licenseisLocked(string _licenseText);
-
-    constructor() ERC721("CCCRinkeby", "CCCR") { }
-    
-    function withdraw() public onlyOwner {
-        uint balance = address(this).balance;
-        msg.sender.transfer(balance);
+    constructor(
+        address _t1,
+        address _t2,
+        address _t3,
+        address _t4,
+        address _t5
+        ) ERC721("CCCRinkeby", "CCCR")  {
+        t1 = _t1;
+        t2 = _t2;
+        t3 = _t3;
+        t4 = _t4;
+        t5 = _t5;
     }
-    
-    function reserveSouls(address _to, uint256 _reserveAmount) public onlyOwner {        
-        uint supply = totalSupply();
-        require(_reserveAmount > 0 && _reserveAmount <= soulReserve, "Not enough reserve left for team");
-        for (uint i = 0; i < _reserveAmount; i++) {
-            _safeMint(_to, supply + i);
+
+    function saveLostSoul(uint256 num) public payable {
+        uint256 supply = totalSupply();
+        require( !salePaused,                              "Sale paused" );
+        require( num <= maxSoulsPurchase,                  "You can adopt a maximum of 20 Souls" );
+        require( supply + num <= MAX_SOULS - soulReserved, "Exceeds maximum Souls supply" );
+        require( msg.value >= soulPrice * num,             "Ether sent is not correct" );
+
+        for(uint256 i; i < num; i++){
+            _safeMint( msg.sender, supply + i );
         }
-        soulReserve = soulReserve.sub(_reserveAmount);
     }
 
+    function walletOfOwner(address _owner) public view returns(uint256[] memory) {
+        uint256 tokenCount = balanceOf(_owner);
 
-    function setProvenanceHash(string memory provenanceHash) public onlyOwner {
+        uint256[] memory tokensId = new uint256[](tokenCount);
+        for(uint256 i; i < tokenCount; i++){
+            tokensId[i] = tokenOfOwnerByIndex(_owner, i);
+        }
+        return tokensId;
+    }
+
+    function setProvenanceHash(string memory provenanceHash) public onlyOwner() {
         SOUL_PROVENANCE = provenanceHash;
     }
 
-    function setBaseURI(string memory baseURI) public onlyOwner {
-        _setBaseURI(baseURI);
+    function setPrice(uint256 _newPrice) public onlyOwner() {
+        soulPrice = _newPrice;
     }
 
+    function _baseURI() internal view virtual override returns (string memory) {
+        return _baseTokenURI;
+    }
 
-    function flipSaleState() public onlyOwner {
-        saleIsActive = !saleIsActive;
+    function setBaseURI(string memory baseURI) public onlyOwner() {
+        _baseTokenURI = baseURI;
     }
-    
-    
-    function tokensOfOwner(address _owner) external view returns(uint256[] memory ) {
-        uint256 tokenCount = balanceOf(_owner);
-        if (tokenCount == 0) {
-            // Return an empty array
-            return new uint256[](0);
-        } else {
-            uint256[] memory result = new uint256[](tokenCount);
-            uint256 index;
-            for (index = 0; index < tokenCount; index++) {
-                result[index] = tokenOfOwnerByIndex(_owner, index);
-            }
-            return result;
-        }
+
+    function getPrice() public view returns (uint256){
+        return soulPrice;
     }
-    
-    // Returns the license for tokens
-    function tokenLicense(uint _id) public view returns(string memory) {
-        require(_id < totalSupply(), "CHOOSE A SOUL WITHIN RANGE");
-        return LICENSE_TEXT;
-    }
-    
-    // Locks the license to prevent further changes 
-    function lockLicense() public onlyOwner {
-        licenseLocked =  true;
-        emit licenseisLocked(LICENSE_TEXT);
-    }
-    
-    // Change the license
-    function changeLicense(string memory _license) public onlyOwner {
-        require(licenseLocked == false, "License already locked");
-        LICENSE_TEXT = _license;
-    }
-    
-    
-    function saveLostSoul(uint numberOfTokens) public payable {
-        require(saleIsActive, "Sale must be active to mint Soul");
-        require(numberOfTokens > 0 && numberOfTokens <= maxSoulPurchase, "Can only mint 20 tokens at a time");
-        require(totalSupply().add(numberOfTokens) <= MAX_SOULS, "Purchase would exceed max supply of Souls");
-        require(msg.value >= soulPrice.mul(numberOfTokens), "Ether value sent is not correct");
-        
-        for(uint i = 0; i < numberOfTokens; i++) {
-            uint mintIndex = totalSupply();
-            if (totalSupply() < MAX_SOULS) {
-                _safeMint(msg.sender, mintIndex);
-            }
+
+    function reserveSouls(address _to, uint256 _amount) external onlyOwner() {
+        require( _amount <= soulReserved, "Exceeds reserved Soul supply" );
+
+        uint256 supply = totalSupply();
+        for(uint256 i; i < _amount; i++){
+            _safeMint( _to, supply + i );
         }
 
+        soulReserved -= _amount;
     }
-     
-    function changeSoulName(uint _tokenId, string memory _name) public {
-        require(ownerOf(_tokenId) == msg.sender, "Hey, your wallet doesn't own this soul!");
-        require(sha256(bytes(_name)) != sha256(bytes(soulNames[_tokenId])), "New name is same as the current one");
-        soulNames[_tokenId] = _name;
-        
-        emit soulNameChange(msg.sender, _tokenId, _name);
-        
+
+    function pause(bool val) public onlyOwner {
+        salePaused = val;
     }
-    
-    function viewSoulName(uint _tokenId) public view returns( string memory ){
-        require( _tokenId < totalSupply(), "Choose a soul within range" );
-        return soulNames[_tokenId];
+
+    function withdrawAll() public payable onlyOwner {
+        uint sale1 = address(this).balance * 4  / 100;
+        uint sale2 = address(this).balance * 3  / 100;
+        uint sale3 = address(this).balance * 10 / 100;
+        uint sale4 = address(this).balance * 10 / 100;
+        uint sale5 = address(this).balance * 73 / 100;
+
+        require(payable(t1).send(sale1));
+        require(payable(t2).send(sale2));
+        require(payable(t3).send(sale3));
+        require(payable(t4).send(sale4));
+        require(payable(t5).send(sale5));
     }
-    
-    
-    // GET ALL SOULS OF A WALLET AS AN ARRAY OF STRINGS. WOULD BE BETTER MAYBE IF IT RETURNED A STRUCT WITH ID-NAME MATCH, would it?
-    function soulNamesOfOwner(address _owner) external view returns(string[] memory ) {
-        uint256 tokenCount = balanceOf(_owner);
-        if (tokenCount == 0) {
-            // Return an empty array
-            return new string[](0);
-        } else {
-            string[] memory result = new string[](tokenCount);
-            uint256 index;
-            for (index = 0; index < tokenCount; index++) {
-                result[index] = soulNames[ tokenOfOwnerByIndex(_owner, index) ] ;
-            }
-            return result;
-        }
-    }
-    
 }
