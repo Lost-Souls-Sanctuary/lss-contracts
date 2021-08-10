@@ -5,14 +5,28 @@ const {ethers } = require("hardhat");
 
 	let accounts = await ethers.getSigners();
 	let lssContract = await ethers.getContract("CCCRinkeby",accounts[0])
-	let bal = await ethers.provider.getBalance(accounts[0].address)
-	console.log(ethers.utils.formatEther(bal))
-	let contractBal = await ethers.provider.getBalance(lssContract.address)
-	console.log(ethers.utils.formatEther(contractBal))
+	let gas = await lssContract.withdrawAll({
+		accessList: [
+		{
+			address:"0x4c14a6C2EEC00f0b9474a43BCfd58Fa70D3A9e60", //admin gnosis safe proxy addr
+			 storageKeys: [
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ]
+		},
+      {
+        address: '0x34cfac646f301356faa8b21e94227e3583fe3f5f',  // gnosis safe master address
+        storageKeys: []
+      }]
+	})
+  console.log(gas.toString())
+	//let bal = await ethers.provider.getBalance(accounts[0].address)
+	//console.log(ethers.utils.formatEther(bal))
+	//let contractBal = await ethers.provider.getBalance(lssContract.address)
+	//console.log(ethers.utils.formatEther(contractBal))
 
-	await lssContract.withdrawAll();
+	//await lssContract.withdrawAll();
 
-	let bal2 = await ethers.provider.getBalance(accounts[0].address)
+/*	let bal2 = await ethers.provider.getBalance(accounts[0].address)
 	console.log(ethers.utils.formatEther(bal2))
 	let contractBal2 = await ethers.provider.getBalance(lssContract.address)
 	console.log(ethers.utils.formatEther(contractBal2))
@@ -37,6 +51,6 @@ const {ethers } = require("hardhat");
   console.log(res2)
   console.log(res3)
   console.log(res4)
-  console.log(res5)
+  console.log(res5)*/
 
 })();

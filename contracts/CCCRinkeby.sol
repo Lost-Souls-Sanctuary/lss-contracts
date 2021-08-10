@@ -16,22 +16,20 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 
 contract CCCRinkeby is ERC721Enumerable, Ownable {
 
-    using Strings for uint256;
-
     string public SOUL_PROVENANCE = "";
     string _baseTokenURI;
-    uint256 public constant MAX_SOULS = 99999;
+    uint256 public constant MAX_SOULS = 9999;
     uint256 private soulReserved = 100;
     uint256 public constant maxSoulsPurchase = 20;
     uint256 private soulPrice = 0.03 ether;
     bool public salePaused = true;
 
-    // Team - 25%
+    // Team - 50%
     address t1;
     address t2;
     address t3;
     address t4;
-    // Community Wallet - 73%
+    // Community Wallet - 50%
     address t5;
 
     constructor(
@@ -70,11 +68,11 @@ contract CCCRinkeby is ERC721Enumerable, Ownable {
         return tokensId;
     }
 
-    function setProvenanceHash(string memory provenanceHash) public onlyOwner() {
+    function setProvenanceHash(string memory provenanceHash) public onlyOwner {
         SOUL_PROVENANCE = provenanceHash;
     }
 
-    function setPrice(uint256 _newPrice) public onlyOwner() {
+    function setPrice(uint256 _newPrice) public onlyOwner {
         soulPrice = _newPrice;
     }
 
@@ -82,7 +80,7 @@ contract CCCRinkeby is ERC721Enumerable, Ownable {
         return _baseTokenURI;
     }
 
-    function setBaseURI(string memory baseURI) public onlyOwner() {
+    function setBaseURI(string memory baseURI) public onlyOwner {
         _baseTokenURI = baseURI;
     }
 
@@ -90,7 +88,7 @@ contract CCCRinkeby is ERC721Enumerable, Ownable {
         return soulPrice;
     }
 
-    function reserveSouls(address _to, uint256 _amount) external onlyOwner() {
+    function reserveSouls(address _to, uint256 _amount) external onlyOwner {
         require( _amount <= soulReserved, "Exceeds reserved Soul supply" );
 
         uint256 supply = totalSupply();
@@ -106,11 +104,11 @@ contract CCCRinkeby is ERC721Enumerable, Ownable {
     }
 
     function withdrawAll() public payable onlyOwner {
-        uint sale1 = address(this).balance * 4  / 100;
-        uint sale2 = address(this).balance * 3  / 100;
-        uint sale3 = address(this).balance * 10 / 100;
-        uint sale4 = address(this).balance * 10 / 100;
-        uint sale5 = address(this).balance * 73 / 100;
+        uint sale1 = address(this).balance * 8  / 100;
+        uint sale2 = address(this).balance * 6  / 100;
+        uint sale3 = address(this).balance * 18 / 100;
+        uint sale4 = address(this).balance * 18 / 100;
+        uint sale5 = address(this).balance * 50 / 100;
 
         require(payable(t1).send(sale1));
         require(payable(t2).send(sale2));

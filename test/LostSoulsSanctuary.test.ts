@@ -197,15 +197,15 @@ describe("LostSoulsNFT", function () {
     let t4b = await ethers.provider.getBalance(other2.address);
     let t5b = await ethers.provider.getBalance(community.address);    
     let t1bres = await ethers.utils.formatEther(t1b);
-    let res1b = parseFloat(t1bres)  + (4 / 100) * totalPrice;
+    let res1b = parseFloat(t1bres)  + (8 / 100) * totalPrice;
     let t2bres = await ethers.utils.formatEther(t2b);
-    let res2b = parseFloat(t2bres)  + (3 / 100) * totalPrice;
+    let res2b = parseFloat(t2bres)  + (6 / 100) * totalPrice;
     let t3bres = await ethers.utils.formatEther(t3b);
-    let res3b = parseFloat(t3bres)  + (10 / 100) * totalPrice;
+    let res3b = parseFloat(t3bres)  + (18 / 100) * totalPrice;
     let t4bres = await ethers.utils.formatEther(t4b);
-    let res4b = parseFloat(t4bres)  + (10 / 100) * totalPrice;
+    let res4b = parseFloat(t4bres)  + (18 / 100) * totalPrice;
     let t5bres = await ethers.utils.formatEther(t5b);
-    let res5b = parseFloat(t5bres)  + (73 / 100) * totalPrice;
+    let res5b = parseFloat(t5bres)  + (50 / 100) * totalPrice;
 
     await lss.connect(other).saveLostSoul(amount,{'value':ethers.utils.parseUnits(totalPrice.toString(),"ether")});
     //let tokenIds = await lss.walletOfOwner(other.address);

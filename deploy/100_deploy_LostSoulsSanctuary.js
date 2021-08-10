@@ -7,7 +7,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     accounts[2].address,
     accounts[3].address,
     accounts[0].address,
-    accounts[0].address,
+    '0x4c14a6C2EEC00f0b9474a43BCfd58Fa70D3A9e60',
   ];
   await deploy("CCCRinkeby", {
     from: accounts[0].address,
