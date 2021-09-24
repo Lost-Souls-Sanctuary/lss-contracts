@@ -126,7 +126,7 @@
   },
   {
     "inputs": [],
-    "name": "MAX_SOULS",
+    "name": "MAX_XXXX",
     "outputs": [
       {
         "internalType": "uint256",
@@ -139,7 +139,7 @@
   },
   {
     "inputs": [],
-    "name": "SOUL_PROVENANCE",
+    "name": "XXXX_PROVENANCE",
     "outputs": [
       {
         "internalType": "string",
@@ -245,7 +245,7 @@
   },
   {
     "inputs": [],
-    "name": "maxSoulsPurchase",
+    "name": "maxxxxxPurchase",
     "outputs": [
       {
         "internalType": "uint256",

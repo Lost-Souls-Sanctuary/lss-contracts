@@ -58,7 +58,6 @@ const config: HardhatUserConfig = {
     mainnet: {
       url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts,
-      gasPrice: 120 * 1000000000,
       chainId: 1,
     },
     localhost: {
@@ -69,11 +68,15 @@ const config: HardhatUserConfig = {
       tags: ["local"],
     },
     hardhat: {
+      forking: {
+        enabled: process.env.FORKING === "true",
+        url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
+      },
       accounts,
       live: false,
       saveDeployments: true,
       tags: ["test", "local"],
-      chainId:1337
+      /*chainId:1337*/
     },
     ropsten: {
       url: `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`,
@@ -154,6 +157,11 @@ const config: HardhatUserConfig = {
       tasks: ["compile"],
       files: ["./contracts"],
       verbose: true,
+    },
+  },
+  external: {
+    deployments: {
+      hardhat: ['deployments/mainnet'],
     },
   },
 }

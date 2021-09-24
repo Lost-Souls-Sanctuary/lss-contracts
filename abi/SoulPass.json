@@ -3,27 +3,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_t1",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_t2",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_t3",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_t4",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_t5",
+        "name": "LostSoulsContract",
         "type": "address"
       }
     ],
@@ -126,7 +106,7 @@
   },
   {
     "inputs": [],
-    "name": "MAX_SOULS",
+    "name": "MAX_SOULPASS",
     "outputs": [
       {
         "internalType": "uint256",
@@ -190,6 +170,37 @@
   {
     "inputs": [
       {
+        "internalType": "uint256[]",
+        "name": "soulArray",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "claimAllSoulPass",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "soulOne",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "soulTwo",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimSoulPass",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
@@ -201,19 +212,6 @@
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -245,12 +243,12 @@
   },
   {
     "inputs": [],
-    "name": "maxSoulsPurchase",
+    "name": "mintPaused",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "bool",
         "name": "",
-        "type": "uint256"
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -325,24 +323,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "reserveSouls",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "from",
         "type": "address"
       },
@@ -391,32 +371,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "salePaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "num",
-        "type": "uint256"
-      }
-    ],
-    "name": "saveLostSoul",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -450,19 +404,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_newPrice",
-        "type": "uint256"
-      }
-    ],
-    "name": "setPrice",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "string",
         "name": "provenanceHash",
         "type": "string"
@@ -471,6 +412,44 @@
     "name": "setProvenanceHash",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "soulClaimed",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
+    "name": "soulNotClaimed",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -633,13 +612,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdrawAll",
-    "outputs": [],
-    "stateMutability": "payable",
     "type": "function"
   }
 ]

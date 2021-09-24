@@ -5,6 +5,8 @@ const {ethers } = require("hardhat");
 
 	let accounts = await ethers.getSigners();
 	let lssContract = await ethers.getContract("LostSoulsSanctuary",accounts[0])
-	
-	await lssContract.setBaseURI('https://lostsoulsnft.com/api/');
+	let res = await lssContract.pause(true,{
+		/*gasPrice:ethers.utils.parseUnits('15','wei')*/
+	});
+	console.log(res)
 })();

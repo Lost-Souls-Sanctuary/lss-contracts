@@ -6,21 +6,20 @@
 // All hope is not lost! Though the discovery of the Higgs boson particle a group of ghost-savers have established communication with 10,000 Lost Souls and struck a deal. 
 // The deal: a Sanctuary will be setup to help the Souls discover their mistakes, changes their lives and pass through to the elusive good place,
 // in return the Lost Souls Sanctuary will be given exclusive access to study the ectoplasmic layer the Soul's reside in so we may better understand our mortal role here on Earth.
-//
+
 // <3 LS Sanctuary team
-// @glu
 
 pragma solidity ^0.8.0;
 
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
-contract LostSoulsSanctuary is ERC721Enumerable, Ownable {
+contract CCCRinkeby is ERC721Enumerable, Ownable {
 
     string public SOUL_PROVENANCE = "";
     string _baseTokenURI;
-    uint256 public constant MAX_SOULS = 9999;
-    uint256 private soulReserved = 125;
+    uint256 public constant MAX_SOULS = 10;
+    uint256 private soulReserved = 2;
     uint256 public constant maxSoulsPurchase = 20;
     uint256 private soulPrice = 0.03 ether;
     bool public salePaused = true;
@@ -30,7 +29,7 @@ contract LostSoulsSanctuary is ERC721Enumerable, Ownable {
     address t2;
     address t3;
     address t4;
-    // 50% - MUTLISIG // 40% MUTLISIG, 10% Charity
+    // 50% - MUTLISIG // 40% DAO, 10% Charity
     address t5;
 
     constructor(
@@ -39,7 +38,7 @@ contract LostSoulsSanctuary is ERC721Enumerable, Ownable {
         address _t3,
         address _t4,
         address _t5
-        ) ERC721("LostSoulsSanctuary", "LSS")  {
+        ) ERC721("CCCRinkeby", "CCCR")  {
         t1 = _t1;
         t2 = _t2;
         t3 = _t3;

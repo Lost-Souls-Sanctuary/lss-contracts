@@ -4,11 +4,12 @@ const {ethers } = require("hardhat");
   const { deploy } = deployments
 
 	let accounts = await ethers.getSigners();
-	let lssContract = await ethers.getContract("CCCRinkeby",accounts[0])
+	let lssContract = await ethers.getContract("LostSoulsSanctuary",accounts[0])
 	let gas = await lssContract.withdrawAll({
+		/*gasPrice:ethers.utils.parseUnits("100","gwei"),*/
 		accessList: [
 		{
-			address:"0x4c14a6C2EEC00f0b9474a43BCfd58Fa70D3A9e60", //admin gnosis safe proxy addr
+			address:"0xFfCd5e359A6AFe39f6c58544db0BB408F2d17e33", //admin gnosis safe proxy addr
 			 storageKeys: [
             "0x0000000000000000000000000000000000000000000000000000000000000000"
         ]

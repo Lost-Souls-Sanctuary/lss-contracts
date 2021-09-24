@@ -19,7 +19,7 @@ describe("LostSoulsNFT", function () {
 
   before(async function () {
     [glu, gbk, ci, c,other,community,other2] = await ethers.getSigners();
-    lssNFT = await ethers.getContractFactory("CCCRinkeby")
+    lssNFT = await ethers.getContractFactory("LostSoulsSanctuary")
   })
 
   beforeEach(async function () {
@@ -39,8 +39,8 @@ describe("LostSoulsNFT", function () {
     const name = await lss.name();
     const symbol = await lss.symbol();
     const pausedState = await lss.salePaused()
-    expect(name, "CCCRinkeby");
-    expect(symbol, "CCCR");
+    expect(name, "LostSoulsSanctuary");
+    expect(symbol, "LSS");
     expect(pausedState).to.be.equal(true);
 
   });
@@ -96,29 +96,53 @@ describe("LostSoulsNFT", function () {
 
   });
 
-  it("should mint Reserve Souls", async function () {
-    await lss.pause(false)
-    await lss.reserveSouls(glu.address,100, {gasLimit:'11495542'})
-    let tokenIds = await lss.walletOfOwner(glu.address);
-    // mint 1 = 108692
-    // mint 100 = 11551441
-    //let gas = await lss.estimateGas.reserveSouls(glu.address,100,{gasLimit:'11551441'})
-    //console.log(gas.toString())
-    //console.log(tokenIds.toString())
-    expect(tokenIds.toString())
-    .to.be.equal('0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99')
-  });
-
   it("reserve estiamte gas", async function () {
-    let estGas = '11495542';
+    let estGas = '14430226';
     // mint 100 = 11551441
-    let gas = await lss.estimateGas.reserveSouls(glu.address,100,{gasLimit:estGas})
+    let gas = await lss.estimateGas.reserveSouls(glu.address,62,{gasLimit:estGas})
+    console.log(gas.toString())
     expect(gas.toString(),estGas);
   });
 
+  it("should mint Souls ", async function () {
+    await lss.pause(false)
+    let price = 0.03;
+    let amount = 8;
+    let totalPrice = amount * price; // 0.6
+    //await lss.reserveSouls(glu.address,2, {gasLimit:'12450000'})
+    //await lss.reserveSouls(gbk.address,amount)
+    await lss.saveLostSoul(amount, {'value':ethers.utils.parseUnits(totalPrice.toString(),"ether")})
+    let tokenIds = await lss.walletOfOwner(glu.address);
+    // mint 1 = 108692
+    // mint 100 = 11551441
+    //let gas = await lss.estimateGas.reserveSouls(glu.address,100,{gasLimit:'11495542'})
+    //console.log(gas.toString())
+    //console.log(tokenIds.toString())
+    expect(tokenIds.toString())
+    .to.be.equal('0,1,2,3,4,5,6,7');//,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124')
+  });
+
+
+  it("should mint Reserve Souls", async function () {
+    await lss.pause(false)
+    await lss.reserveSouls(glu.address,62, {gasLimit:'12450000'})
+    await lss.reserveSouls(glu.address,63, {gasLimit:'12450000'})
+    let tokenIds = await lss.walletOfOwner(glu.address);
+    // mint 1 = 108692
+    // mint 100 = 11551441
+    //let gas = await lss.estimateGas.reserveSouls(glu.address,100,{gasLimit:'11495542'})
+    //console.log(gas.toString())
+    //console.log(tokenIds.toString())
+    expect(tokenIds.toString())
+    .to.be.equal('0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124')
+  });
+
+
   it("should not mint more reserve souls than reserve amount", async function () {
     await lss.pause(false)
-    await expect(lss.reserveSouls(glu.address,101, {gasLimit:'11604234'}))
+    await lss.reserveSouls(glu.address,62, {gasLimit:'12450000'})
+    await lss.reserveSouls(glu.address,63, {gasLimit:'12450000'})
+    await expect(lss.reserveSouls(glu.address,1, {gasLimit:'12450000'}))
     .to.be.revertedWith('Exceeds reserved Soul supply')
     let tokenIds = await lss.walletOfOwner(glu.address);
 
@@ -181,6 +205,19 @@ describe("LostSoulsNFT", function () {
 
       // Should fail
       await expect(lss.saveLostSoul(amount,{'value':ethers.utils.parseUnits(oldPrice.toString(),"ether")})).to.be.revertedWith("Ether sent is not correct");
+  });
+
+  it("should only allow owner to withdrawAll", async function () {
+    await lss.pause(false)
+      let newPrice = 0.05;
+      let oldPrice = 0.03;
+      let amount = 1;
+
+      //await lss.setPrice(ethers.utils.parseUnits(newPrice.toString(),'ether'))
+      await lss.saveLostSoul(amount,{'value':ethers.utils.parseUnits(newPrice.toString(),"ether")});
+
+      // Should fail
+      await expect(lss.connect(gbk).withdrawAll()).to.be.revertedWith("Ownable: caller is not the owner");
   });
 
   it("should allow ether withdraw", async function () {

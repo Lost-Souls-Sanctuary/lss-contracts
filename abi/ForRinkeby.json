@@ -126,7 +126,7 @@
   },
   {
     "inputs": [],
-    "name": "MAX_SOULS",
+    "name": "MAX_XXXX",
     "outputs": [
       {
         "internalType": "uint256",
@@ -139,7 +139,7 @@
   },
   {
     "inputs": [],
-    "name": "SOUL_PROVENANCE",
+    "name": "XXXX_PROVENANCE",
     "outputs": [
       {
         "internalType": "string",
@@ -245,7 +245,7 @@
   },
   {
     "inputs": [],
-    "name": "maxSoulsPurchase",
+    "name": "maxxxxxPurchase",
     "outputs": [
       {
         "internalType": "uint256",
@@ -334,7 +334,7 @@
         "type": "uint256"
       }
     ],
-    "name": "reserveSouls",
+    "name": "reserveXXXX",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -391,19 +391,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "salePaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -411,7 +398,7 @@
         "type": "uint256"
       }
     ],
-    "name": "saveLostSoul",
+    "name": "savexxxxxxxx",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -640,6 +627,19 @@
     "name": "withdrawAll",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "xxxxPaused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]
