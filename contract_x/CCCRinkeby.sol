@@ -14,7 +14,7 @@ pragma solidity ^0.8.0;
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
-contract CCCRinkeby is ERC721Enumerable, Ownable {
+contract TestLS is ERC721Enumerable, Ownable {
 
     string public SOUL_PROVENANCE = "";
     string _baseTokenURI;
@@ -38,7 +38,7 @@ contract CCCRinkeby is ERC721Enumerable, Ownable {
         address _t3,
         address _t4,
         address _t5
-        ) ERC721("CCCRinkeby", "CCCR")  {
+        ) ERC721("TestLS", "TestLS")  {
         t1 = _t1;
         t2 = _t2;
         t3 = _t3;

@@ -1,7 +1,7 @@
 module.exports = async function ({ getNamedAccounts, deployments }) {
   const { deploy } = deployments
 
-  /*let accounts = await ethers.getSigners();
+  let accounts = await ethers.getSigners();
   let args = [
     accounts[1].address,
     accounts[2].address,
@@ -9,7 +9,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     accounts[0].address,
     accounts[4].address
   ];
-  await deploy("ForRinkeby", {
+  /*await deploy("CCCRinkeby", {
     from: accounts[0].address,
     args:args,
     log: true,
@@ -17,4 +17,4 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
   })*/
 }
 
-module.exports.tags = ["ForRinkeby"]
+module.exports.tags = ["CCCRinkeby"]

@@ -62,7 +62,7 @@ const config: HardhatUserConfig = {
     },
     localhost: {
       url: "http://127.0.0.1:8545",
-      accounts,
+      /*accounts,*/
       live: false,
       saveDeployments: true,
       tags: ["local"],
@@ -72,7 +72,7 @@ const config: HardhatUserConfig = {
         enabled: process.env.FORKING === "true",
         url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
       },
-      accounts,
+      /*accounts,*/
       live: false,
       saveDeployments: true,
       tags: ["test", "local"],

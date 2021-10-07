@@ -1,5 +1,5 @@
 module.exports = async function ({ getNamedAccounts, deployments }) {
-  /*const { deploy } = deployments
+  const { deploy } = deployments
 
   let accounts = await ethers.getSigners();
   let args = [
@@ -14,7 +14,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     args:args,
     log: true,
     deterministicDeployment: false
-  })*/
+  })
 }
 
 module.exports.tags = ["LostSoulsSanctuary"]

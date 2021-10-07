@@ -5,7 +5,7 @@ const {ethers } = require("hardhat");
 
 	let accounts = await ethers.getSigners();
 	console.log(accounts[0].address)
-	let lssContract = await ethers.getContract("CCCRinkeby",accounts[0])
+	let lssContract = await ethers.getContract("LostSoulsSanctuary",accounts[0])
 	let gasRes = await ethers.provider.getGasPrice();
 	let nonce = await ethers.provider.getTransactionCount(accounts[0].address)
 	console.log(ethers.utils.parseUnits("0.03",18).toString())

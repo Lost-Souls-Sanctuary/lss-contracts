@@ -40,7 +40,7 @@ contract SoulPass is ERC721Enumerable, Ownable {
         uint256 supply = totalSupply();
         require( !mintPaused,                              "Mint paused" );
         // Check if we hit max
-        require( supply <= MAX_SOULPASS, "Exceeds maximum SoulPass supply" );
+        require( supply < MAX_SOULPASS, "Exceeds maximum SoulPass supply" );
         require(soulArray.length % 2 == 0,"Send an even amount of Souls");
 
         for(uint256 i;i<soulArray.length;i+=2){
@@ -92,10 +92,6 @@ contract SoulPass is ERC721Enumerable, Ownable {
         SOUL_PROVENANCE = provenanceHash;
     }
 
-    /*function setPrice(uint256 _newPrice) public onlyOwner {
-        soulPrice = _newPrice;
-    }*/
-
     function _baseURI() internal view virtual override returns (string memory) {
         return _baseTokenURI;
     }
@@ -104,36 +100,9 @@ contract SoulPass is ERC721Enumerable, Ownable {
         _baseTokenURI = baseURI;
     }
 
-    /*function getPrice() public view returns (uint256){
-        return soulPrice;
-    }*/
-
-    /*function reserveSouls(address _to, uint256 _amount) external onlyOwner {
-        require( _amount <= soulReserved, "Exceeds reserved Soul supply" );
-
-        uint256 supply = totalSupply();
-        for(uint256 i; i < _amount; i++){
-            _safeMint( _to, supply + i );
-        }
-
-        soulReserved -= _amount;
-    }*/
-
+    
     function pause(bool val) public onlyOwner {
         mintPaused = val;
     }
 
-    /*function withdrawAll() public payable onlyOwner {
-        uint sale1 = address(this).balance * 8  / 100;
-        uint sale2 = address(this).balance * 6  / 100;
-        uint sale3 = address(this).balance * 18 / 100;
-        uint sale4 = address(this).balance * 18 / 100;
-        uint sale5 = address(this).balance * 50 / 100;
-
-        payable(t1).transfer(sale1);
-        payable(t2).transfer(sale2);
-        payable(t3).transfer(sale3);
-        payable(t4).transfer(sale4);
-        payable(t5).transfer(sale5);
-    }*/
 }
