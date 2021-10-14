@@ -18,7 +18,7 @@ import { HardhatUserConfig } from "hardhat/types"
 import { removeConsoleLog } from "hardhat-preprocessor"
 
 const accounts = {
-  mnemonic: process.env.MNEMONIC
+  mnemonic: process.env.LSS_DEPLOYER_MNEMONIC
 }
 
 const config: HardhatUserConfig = {
@@ -59,12 +59,14 @@ const config: HardhatUserConfig = {
       url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts,
       chainId: 1,
+      gasPrice: 111000000000,
     },
     localhost: {
       url: "http://127.0.0.1:8545",
       /*accounts,*/
+      chainId:1337,
       live: false,
-      saveDeployments: true,
+      saveDeployments: false,
       tags: ["local"],
     },
     hardhat: {
@@ -72,11 +74,11 @@ const config: HardhatUserConfig = {
         enabled: process.env.FORKING === "true",
         url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
       },
-      /*accounts,*/
+      accounts,
       live: false,
       saveDeployments: true,
       tags: ["test", "local"],
-      /*chainId:1337*/
+      chainId:1337
     },
     ropsten: {
       url: `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`,

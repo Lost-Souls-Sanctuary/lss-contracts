@@ -46,6 +46,7 @@ describe("SoulPass", function () {
     lssContractOut.address,
     ];
     sp = await soulPass.deploy(...args1)
+    //console.log(sp)
     await sp.deployed()
     await sp.setBaseURI(initUrl)
   })
@@ -82,6 +83,36 @@ describe("SoulPass", function () {
 		expect('0').to.be.equal(tokenIds.toString());
 
   });
+
+/*it("should mint max soul pass", async function () {
+    let price = 0.03;
+    let amount = 8;
+    let totalPrice = amount * price; // 0.6
+
+    // unpause sale for both
+    await lss.pause(false);
+    await sp.pause(false);
+
+    // mint two
+    await lss.saveLostSoul(amount, {'value':ethers.utils.parseUnits(totalPrice.toString(),"ether")})
+
+
+    // Mint SP
+    //await sp.claimSoulPass(0,1);
+    //await sp.claimSoulPass(2,3);
+    await expect(sp.claimAllSoulPass([0,1,2,3]))
+      .to.be.revertedWith("Exceeds maximum SoulPass supply");
+    // Check if soulpasses were minted to glu
+    let tokenIds = await sp.walletOfOwner(glu.address);
+    //console.log(tokenIds.toString())
+    //expect('0,1').to.be.equal(tokenIds.toString());
+
+    // Mint third one
+    //await expect(sp.claimSoulPass(4,5))
+    //.to.be.revertedWith("Exceeds maximum SoulPass supply");
+
+
+  });*/
 
 	it("should mint one soul pass and check soulclaimed", async function () {
 		let price = 0.03;
