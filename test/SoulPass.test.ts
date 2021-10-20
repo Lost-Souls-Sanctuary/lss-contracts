@@ -319,6 +319,26 @@ describe("SoulPass", function () {
     
   });
 
+  it("should throw error on claimAllSoulPass entered amount is odd", async function () {
+    let price = 0.03;
+    let amount = 4;
+    let totalPrice = amount * price; // 0.6
+
+    // unpause sale for both
+    await lss.pause(false);
+    await sp.pause(false);
+
+    // mint four
+    //await lss.saveLostSoul(amount, {'value':ethers.utils.parseUnits(totalPrice.toString(),"ether")})
+    await lss.connect(gbk).saveLostSoul(amount, {'value':ethers.utils.parseUnits(totalPrice.toString(),"ether")})
+
+
+    // Mint SP
+    await expect(sp.claimAllSoulPass([])).to.be.revertedWith("Send an even amount of Souls");
+
+    
+  });
+
   it("should return token of owner", async function () {
     // mint 1 to glu
     /*await sp.pause(false)
