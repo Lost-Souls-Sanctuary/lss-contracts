@@ -59,14 +59,14 @@ const config: HardhatUserConfig = {
       url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts,
       chainId: 1,
-      gasPrice: 111000000000,
+      gasPrice: 100000000000,
     },
     localhost: {
       url: "http://127.0.0.1:8545",
       /*accounts,*/
       chainId:1337,
       live: false,
-      saveDeployments: false,
+      saveDeployments: true,
       tags: ["local"],
     },
     hardhat: {

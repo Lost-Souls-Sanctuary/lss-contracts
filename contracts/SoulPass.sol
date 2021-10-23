@@ -93,5 +93,4 @@ contract SoulPass is ERC721Enumerable, Ownable {
     function pause(bool val) public onlyOwner {
         mintPaused = val;
     }
-
 }
